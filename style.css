@@ -1,0 +1,242 @@
+/* General */
+body {
+    font-family: Arial, sans-serif;
+    background-color: black;
+    color: white;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-rows: auto 1fr;
+    grid-template-areas:
+        "header"
+        "main";
+    height: 100vh;
+}
+header {
+    display: grid;
+    grid-area: header;
+    grid-template-areas: "title time sound import export connect upload add";
+    grid-template-columns: 1fr auto auto auto;
+    align-items: center;
+    gap: 10px;
+    padding: 5px 15px 5px 15px;
+    background-color: #222;
+    overflow: auto;
+}
+#alarmList {
+    display: grid;
+    grid-area: main;
+    overflow: auto;
+    grid-template-columns: 1fr;
+}
+h2 {
+    grid-area: title;
+}
+.headerBtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    background-color: green;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.headerBtn:hover {
+    background-color: darkgreen;
+    transform: scale(1.1);
+}
+
+.headerBtn:active {
+    transform: scale(0.9);
+}
+.headerBtn:disabled {
+    background-color: grey;
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+.headerBtn img {
+    width: 80%;
+    height: 80%;
+    pointer-events: none;
+}
+
+/* Alarm Display Card */
+.card {
+    background-color: #333;
+    padding: 10px;
+    margin: 10px;
+    height: fit-content;
+    border-radius: 5px;
+    display: grid;
+    grid-template-areas:
+        "time alarm edit delete"
+        "desc sound edit delete";
+    grid-template-columns: 1fr 1fr auto auto;
+    gap: 5px;
+}
+.card h3 {
+    grid-area: time;
+    margin: 0;
+}
+.card b {
+    grid-area: alarm;
+    font-size: 20px;
+}
+.card a {
+    grid-area: sound;
+    font-size: 16px;
+}
+.card p {
+    grid-area: desc;
+    color: gray;
+    margin: 0;
+}
+.card button.edit {
+    grid-area: edit;
+    background-color: green;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.card button.edit:hover {
+    background-color: darkgreen;
+}
+.card button.delete {
+    grid-area: delete;
+    background-color: red;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.card button.delete:hover {
+    background-color: darkred;
+}
+
+/* Create Alarm Window */
+#barrier {
+    position: fixed;
+    left: 0%;
+    top: 0%;
+    width: 100%;
+    height: 100%;
+    z-index: 9998;
+    background: rgba(0, 0, 0, 0.5);
+}
+.newWindow {
+    display: grid;
+    grid-template-areas: 
+        "close close"
+        "occurs time"
+        "occurs repeat"
+        "others others";
+    grid-template-columns: auto auto;
+    align-content: baseline;
+    background-color: #333;
+    border: 1px solid #555;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    position: fixed;
+    width: auto;
+    height: 75%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+    overflow: auto;
+    overflow-wrap: break-word;
+}
+.close {
+    grid-area: close;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    background-color: red;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    justify-self: end;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+.close:hover {
+    background-color: darkred;
+    transform: scale(1.1);
+}
+.close:active {
+    transform: scale(0.9);
+}
+.occurs {
+    grid-area: occurs;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 10px;
+}
+.radio-group {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.time {
+    grid-area: time;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 10px;
+}
+input[type="time"], input[type="text"], input[type="date"], input[type="number"], select {
+    width: 100%;
+    padding: 5px;
+    font-size: 16px;
+    border: 1px solid #555;
+    border-radius: 5px;
+    box-sizing: border-box;
+    background-color: white;
+    color: black;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+input[type="time"]:focus, input[type="text"]:focus {
+    border-color: blue;
+}
+.repeat {
+    grid-area: repeat;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 10px;
+}
+.others {
+    grid-area: others;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 10px;
+}
+.okButton {
+    height: 40px;
+    width: 100px;
+    padding: 0 20px;
+    line-height: normal;
+    background-color: green;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    align-self: center;
+    margin-top: 30px;
+}

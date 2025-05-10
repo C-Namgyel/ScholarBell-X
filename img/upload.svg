@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="112"
+   height="128.00038"
+   viewBox="-2 0 28 32.000095"
+   version="1.1"
+   id="svg1"
+   sodipodi:docname="upload.svg"
+   inkscape:version="1.4 (86a8ad7, 2024-10-11)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1" />
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="4.5703125"
+     inkscape:cx="55.904274"
+     inkscape:cy="64"
+     inkscape:window-width="1440"
+     inkscape:window-height="829"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg1" />
+  <g
+     id="Lager_3"
+     data-name="Lager 3"
+     transform="translate(-4,9.7235186e-5)">
+    <g
+       id="Group_2"
+       data-name="Group 2">
+      <path
+         id="Path_4"
+         data-name="Path 4"
+         d="M 28,14 H 23.98 A 1.979,1.979 0 0 0 22,15.98 v 0.04 A 1.979,1.979 0 0 0 23.98,18 H 25 a 1,1 0 0 1 1,1 v 8 a 1,1 0 0 1 -1,1 H 7 A 1,1 0 0 1 6,27 V 19 A 1,1 0 0 1 7,18 H 8.02 A 1.979,1.979 0 0 0 10,16.02 V 15.98 A 1.979,1.979 0 0 0 8.02,14 H 4 a 2,2 0 0 0 -2,2 v 14 a 2,2 0 0 0 2,2 h 24 a 2,2 0 0 0 2,-2 V 16 a 2,2 0 0 0 -2,-2 z"
+         fill="#ffffff"
+         fill-rule="evenodd" />
+      <path
+         id="Path_5"
+         data-name="Path 5"
+         d="M 11.413,9.387 14,6.754 V 23 a 1,1 0 0 0 1,1 h 2 a 1,1 0 0 0 1,-1 V 7.057 l 0.26,0.042 2.327,2.301 a 2.017,2.017 0 0 0 2.833,0 1.969,1.969 0 0 0 0,-2.807 L 17.346,0.581 a 2.017,2.017 0 0 0 -2.833,0 l -5.934,6 a 1.97,1.97 0 0 0 0,2.806 2.016,2.016 0 0 0 2.834,0 z"
+         fill="#ffffff"
+         fill-rule="evenodd" />
+    </g>
+  </g>
+</svg>

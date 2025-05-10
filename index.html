@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>School Bell System</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <header>
+        <h2>School Bell</h2>
+        <button class="headerBtn" style="grid-area: time;" title="Set Time" onclick="window.open('./Time Upload/', '_self')"><img src="./img/clock.svg" alt="Clock"></button>
+        <button class="headerBtn" style="grid-area: sound;" title="Sound" onclick="this.firstChild.click()"><input type="file" webkitdirectory style="display: none;" oninput="importSound(this)"><img src="./img/music.svg" alt="Music"></button>
+        <button class="headerBtn" style="grid-area: import;" title="Import" onclick="this.firstChild.click()"><input type="file" accept=".bell" style="display: none;" oninput="importData(this)"><img src="./img/import.svg" alt="Import"></button>
+        <button class="headerBtn" style="grid-area: export;" title="Export" onclick="exportData()"><img src="./img/export.svg" alt="Export"></button>
+        <button class="headerBtn" style="grid-area: connect;" title="Connect to Arduino" onclick="connectToArduino()"><img id="connectImg" src="./img/connect.svg" alt="Connect"></button>
+        <button id="upload" class="headerBtn" style="grid-area: upload;" title="Upload to Arduino" onclick="uploadAlarm()" disabled><img src="./img/upload.svg" alt="Upload"></button>
+        <button class="headerBtn" style="grid-area: add;" title="Add Alarm" onclick="addAlarm()"><img src="./img/add.svg" alt="Add"></button>
+    </header>
+    <main id="alarmList">
+        <p id="noAlarms" style="text-align: center; color: gray;">No alarms set.</p>
+    </main>
+</body>
+<script src="./script.js"></script>
+</html>
