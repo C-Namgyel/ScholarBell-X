@@ -8,7 +8,7 @@ async function connectToArduino() {
     if (document.getElementById("upload").disabled == true) {
         try {
             const ports = await navigator.serial.requestPort();
-            await ports.open({ baudRate: 9600 });
+            await ports.open({ baudRate: 115200 });
             port = ports;
             writer = port.writable.getWriter();
             const textDecoder = new TextDecoderStream();
@@ -398,11 +398,24 @@ function uploadAlarm() {
                 arr += ";";
             }
         }
-        uploadData += arr;
-        if (x == "time") {
-            uploadData += "|";
+        uploadData += arr + "|";
+    }
+    let dayBinary = "0";
+    for (let z of Object.values(alarms)) {
+        for (let d = 0; d < 7; d++) {
+            if (z["days"].includes(d)) {
+                dayBinary += "1";
+            } else {
+                dayBinary += "0";
+            }
+        }
+        uploadData += binary2decimal(dayBinary);
+        dayBinary = "0";
+        if (Object.values(alarms).indexOf(z) != Object.values(alarms).length - 1) {
+            uploadData += ";";
         }
     }
-    // console.log("1"+Object.keys(alarms).length.toString().padStart(2, "0")+uploadData);
+
+    console.log("1"+Object.keys(alarms).length.toString().padStart(2, "0")+uploadData);
     sendData("1"+Object.keys(alarms).length.toString().padStart(2, "0")+uploadData);
 }
