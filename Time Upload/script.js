@@ -5,7 +5,7 @@ let reader;
 async function connectToArduino() {
     try {
         const ports = await navigator.serial.requestPort();
-        await ports.open({ baudRate: 9600 });
+        await ports.open({ baudRate: 115200 });
         port = ports;
 
         // Initialize the writer
