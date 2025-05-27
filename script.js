@@ -4,18 +4,20 @@ let writer;
 let reader;
 let readableStreamClosed; // Declare in a higher scope
 
+let receivedDataBuffer = "";
 async function connectToArduino() {
-    if (document.getElementById("upload").disabled == true) {
+    if (document.getElementById("upload").disabled === true) {
         try {
             const ports = await navigator.serial.requestPort();
             await ports.open({ baudRate: 115200 });
             port = ports;
             writer = port.writable.getWriter();
             const textDecoder = new TextDecoderStream();
-            readableStreamClosed = port.readable.pipeTo(textDecoder.writable); // Assign here
+            readableStreamClosed = port.readable.pipeTo(textDecoder.writable);
             reader = textDecoder.readable.getReader();
             document.getElementById("upload").disabled = false;
             document.getElementById("connectImg").src = "./img/disconnect.svg";
+
             while (true) {
                 try {
                     const { value, done } = await reader.read();
@@ -24,7 +26,16 @@ async function connectToArduino() {
                         break;
                     }
                     if (value) {
-                        console.log("Received:", value.trim());
+                        receivedDataBuffer += value; // Append new data to the buffer
+                        let messages = receivedDataBuffer.split("\n"); // Split messages by newline
+
+                        // Process all complete messages except the last (incomplete) one
+                        for (let i = 0; i < messages.length - 1; i++) {
+                            console.log("Received:", messages[i].trim());
+                        }
+
+                        // Save the last incomplete part back to the buffer
+                        receivedDataBuffer = messages[messages.length - 1];
                     }
                 } catch (readError) {
                     document.getElementById("upload").disabled = true;
@@ -39,7 +50,7 @@ async function connectToArduino() {
         try {
             if (reader) {
                 await reader.cancel();
-                await readableStreamClosed.catch(() => {}); // Now it's accessible here
+                await readableStreamClosed.catch(() => {});
                 reader.releaseLock();
                 reader = null;
             }
@@ -58,6 +69,7 @@ async function connectToArduino() {
         }
     }
 }
+
 
 async function sendData(data) {
     const encoder = new TextEncoder();
@@ -279,7 +291,21 @@ function deleteAlarm(id) {
     delete alarms[id]
     renderAlarms();
 }
-  
+function playSound() {
+    let inp;
+    if (sounds.length == 0) {
+        inp = parseInt(prompt("Enter the sound index"));
+    } else {
+        let display = "";
+        for (let f of sounds) {
+            display += f + "\n";
+        }
+        inp = parseInt(prompt("Enter the sound index\n"+display));
+    }
+    console.log("2"+inp);
+    sendData("2"+inp);
+}
+
 function renderAlarms() {
     const sortedEntries = Object.entries(alarms).sort(([, a], [, b]) => {
         return a.time.localeCompare(b.time);

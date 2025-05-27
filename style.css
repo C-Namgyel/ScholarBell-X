@@ -15,7 +15,7 @@ body {
 header {
     display: grid;
     grid-area: header;
-    grid-template-areas: "title time sound import export connect upload add";
+    grid-template-areas: "title play time sound import export connect upload add";
     grid-template-columns: 1fr auto auto auto;
     align-items: center;
     gap: 10px;
