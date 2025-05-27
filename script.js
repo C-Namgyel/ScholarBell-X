@@ -16,6 +16,7 @@ async function connectToArduino() {
             readableStreamClosed = port.readable.pipeTo(textDecoder.writable);
             reader = textDecoder.readable.getReader();
             document.getElementById("upload").disabled = false;
+            document.getElementById("play").disabled = false;
             document.getElementById("connectImg").src = "./img/disconnect.svg";
 
             while (true) {
@@ -39,6 +40,7 @@ async function connectToArduino() {
                     }
                 } catch (readError) {
                     document.getElementById("upload").disabled = true;
+                    document.getElementById("play").disabled = true;
                     document.getElementById("connectImg").src = "./img/connect.svg";
                     break;
                 }
@@ -61,6 +63,7 @@ async function connectToArduino() {
             if (port) {
                 await port.close();
                 document.getElementById("upload").disabled = true;
+                document.getElementById("play").disabled = true;
                 document.getElementById("connectImg").src = "./img/connect.svg";
                 port = null;
             }

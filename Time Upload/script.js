@@ -3,6 +3,8 @@ let writer;
 let reader;
 
 async function connectToArduino() {
+    let receivedDataBuffer = ""; // Buffer to store incoming data
+
     try {
         const ports = await navigator.serial.requestPort();
         await ports.open({ baudRate: 115200 });
@@ -27,13 +29,23 @@ async function connectToArduino() {
                 break;
             }
             if (value) {
-                console.log("Received:", value.trim());
+                receivedDataBuffer += value; // Append new data to the buffer
+                const messages = receivedDataBuffer.split("\n"); // Split messages by newline
+
+                // Process all complete messages except the last (incomplete) one
+                for (let i = 0; i < messages.length - 1; i++) {
+                    console.log("Received:", messages[i].trim());
+                }
+
+                // Save the last incomplete part back to the buffer
+                receivedDataBuffer = messages[messages.length - 1];
             }
         }
     } catch (error) {
         console.error("Error:", error);
     }
 }
+
 
 
 async function sendData(data) {
@@ -73,7 +85,7 @@ document.getElementById("upload").onclick = function() {
         const minutes = currentDate.getMinutes();
         const seconds = currentDate.getSeconds();
         const month = currentDate.getMonth() + 1;
-        const year = currentDate.getFullYear() % 100;
+        const year = currentDate.getFullYear();
         dataStr += `${year},${month},${date},${hours},${minutes},${seconds}`;
     } else {
         let date = document.getElementById("date").value.split("-");
@@ -81,5 +93,5 @@ document.getElementById("upload").onclick = function() {
         dataStr += `${parseInt(date[0])},${parseInt(date[1])},${parseInt(date[2])},${parseInt(time[0])},${parseInt(time[1])},0`;
     }
     sendData("0"+dataStr);
-    // console.log("0"+dataStr);
+    console.log("0"+dataStr);
 }
