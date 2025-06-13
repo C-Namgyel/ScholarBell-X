@@ -178,6 +178,9 @@ function addAlarm(edit, id) {
         rad.type = "radio";
         rad.name = "occurs";
         rad.value = d;
+        if (d != "Weekly") {
+            rad.disabled = true;
+        }
         wrapper.appendChild(rad);
         const span = document.createElement("a");
         span.textContent = d;
@@ -264,7 +267,7 @@ function addAlarm(edit, id) {
     // Preset
     label.focus();
     if (edit == undefined || edit == false || edit == null || edit == "") {
-        document.querySelector('input[name="occurs"][value="One time"]').click();
+        document.querySelector('input[name="occurs"][value="Weekly"]').click();
     } else {
         document.querySelector(`input[name="occurs"][value="${alarms[id]["occurs"]}"]`).click();
         timeInp.value = alarms[id]["time"];
