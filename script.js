@@ -256,6 +256,7 @@ function addAlarm(edit, id) {
         } else {
             alarms[id] = newAlarm;
         }
+        localStorage.setItem("ScholarBell-X/Save", JSON.stringify(alarms));
         close.click();
         renderAlarms();
     }
@@ -295,6 +296,7 @@ function editAlarm(id) {
 }
 function deleteAlarm(id) {
     delete alarms[id]
+    localStorage.setItem("ScholarBell-X/Save", JSON.stringify(alarms));
     renderAlarms();
 }
 function playSound() {
@@ -388,6 +390,7 @@ function importData(elem) {
     reader.onload = function(e) {
         const text = e.target.result;
         alarms = JSON.parse(text);
+        localStorage.setItem("ScholarBell-X/Save", JSON.stringify(alarms));
         renderAlarms();
         elem.value = null;
     };
@@ -451,3 +454,7 @@ function uploadAlarm() {
     console.log("1"+Object.keys(alarms).length.toString().padStart(2, "0")+uploadData);
     sendData("1"+Object.keys(alarms).length.toString().padStart(2, "0")+uploadData);
 }
+
+// Startup
+alarms = JSON.parse(localStorage.getItem("ScholarBell-X/Save"));
+renderAlarms();
