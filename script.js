@@ -32,7 +32,7 @@ async function connectToArduino() {
 
                         // Process all complete messages except the last (incomplete) one
                         for (let i = 0; i < messages.length - 1; i++) {
-                            console.log("Received:", messages[i].trim());
+                            console.log(messages[i].trim());
                         }
 
                         // Save the last incomplete part back to the buffer
@@ -300,18 +300,43 @@ function deleteAlarm(id) {
     renderAlarms();
 }
 function playSound() {
-    let inp;
-    if (sounds.length == 0) {
-        inp = parseInt(prompt("Enter the sound index"));
-    } else {
-        let display = "";
-        for (let f of sounds) {
-            display += f + "\n";
-        }
-        inp = parseInt(prompt("Enter the sound index\n"+display));
+    if (sounds.length === 0) {
+        alert("No sounds imported.");
+        return;
     }
-    console.log("2"+inp);
-    sendData("2"+inp);
+    // Create modal barrier
+    const barrier = document.createElement("div");
+    barrier.id = "soundModalBarrier";
+    barrier.className = "modal-barrier";
+    // Modal window
+    const modal = document.createElement("div");
+    modal.className = "sound-modal";
+    // Modal header
+    const header = document.createElement("div");
+    header.className = "sound-modal-header";
+    header.textContent = "Select a Sound to Play";
+    modal.appendChild(header);
+    // Close button
+    const closeBtn = document.createElement("button");
+    closeBtn.className = "sound-modal-close";
+    closeBtn.textContent = "×";
+    closeBtn.onclick = () => barrier.remove();
+    modal.appendChild(closeBtn);
+    // Sound list
+    const list = document.createElement("ul");
+    list.className = "sound-list";
+    sounds.forEach((soundName, idx) => {
+        const item = document.createElement("li");
+        item.className = "sound-list-item";
+        item.textContent = soundName;
+        item.onclick = () => {
+            sendData("2" + (idx + 1));
+        };
+        list.appendChild(item);
+    });
+    modal.appendChild(list);
+    barrier.appendChild(modal);
+    document.body.appendChild(barrier);
 }
 
 function renderAlarms() {
@@ -389,6 +414,7 @@ function importData(elem) {
     const reader = new FileReader();
     reader.onload = function(e) {
         const text = e.target.result;
+        console.log(text);
         alarms = JSON.parse(text);
         localStorage.setItem("ScholarBell-X/Save", JSON.stringify(alarms));
         renderAlarms();
@@ -405,8 +431,11 @@ function importSound(elem) {
     const files = elem.files;
     sounds = [];
     for (let file of files) {
-        sounds.push(file.webkitRelativePath);
+        // Extract only the filename, removing any folder path
+        const filename = file.name;
+        sounds.push(filename);
     }
+    localStorage.setItem("ScholarBell-X/Sounds", JSON.stringify(sounds));
     renderAlarms();
 }
 
@@ -456,5 +485,10 @@ function uploadAlarm() {
 }
 
 // Startup
-alarms = JSON.parse(localStorage.getItem("ScholarBell-X/Save"));
-renderAlarms();
+if (localStorage.getItem("ScholarBell-X/Sounds") != null) {
+    sounds = JSON.parse(localStorage.getItem("ScholarBell-X/Sounds"));
+}
+if (localStorage.getItem("ScholarBell-X/Save") != null) {
+    alarms = JSON.parse(localStorage.getItem("ScholarBell-X/Save"));
+    renderAlarms();
+}
